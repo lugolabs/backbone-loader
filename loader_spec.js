@@ -1,4 +1,4 @@
-describe("app.LoaderModel", function() {
+xdescribe("app.LoaderModel", function() {
 	var sync;
 
 	beforeEach(function () {
@@ -28,3 +28,34 @@ describe("app.LoaderModel", function() {
 
 });
 
+describe("app.LoaderView", function() {
+	var sync, model, view;
+
+	beforeEach(function () {
+		sync = Backbone.sync;
+		Backbone.sync = function() {};
+
+		model = new app.LoaderModel;
+		view = new app.LoaderView({model: model});
+
+		spyOn(model, 'fetch');
+		spyOn(view, 'loading');
+	});
+
+	afterEach(function () {
+		Backbone.sync = sync;
+	});
+
+	describe("#loading", function() {
+		it("listens to model's fetch:start", function() {
+			
+
+			model.fetch();
+
+			// console.log(view.loading);
+			expect(view.loading).toHaveBeenCalled();
+			// expect(model.fetch).toHaveBeenCalled();
+
+		});
+	});
+});
