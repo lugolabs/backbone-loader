@@ -39,6 +39,7 @@ describe("app.LoaderModel", function() {
 			});
 
 		});
+
 	});
 
 });
@@ -62,12 +63,12 @@ describe("app.LoaderView", function() {
 			expect(model.on).toHaveBeenCalledWith('fetch:start', view.loading, view);
 		});
 
-		it("listens to model's change with render", function() {
-			expect(model.on).toHaveBeenCalledWith('change', view.render, view);
-		});
-
 		it("listens to model's fetch:stop with stopLoading", function() {
 			expect(model.on).toHaveBeenCalledWith('fetch:stop', view.stopLoading, view);
+		});
+
+		it("listens to model's change with render", function() {
+			expect(model.on).toHaveBeenCalledWith('change', view.render, view);
 		});
 	});
 });

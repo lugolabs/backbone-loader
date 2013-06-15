@@ -39,7 +39,7 @@ app.LoaderView = Backbone.View.extend({
 	},
 
 	stopLoading: function() {
-		if (this._loader) this._loader.empty()
+		if (this._loader) this._loader.empty();
 	},
 
 	render: function() {
