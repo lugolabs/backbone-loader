@@ -319,7 +319,6 @@
       } else {
         (attrs = {})[key] = val;
       }
-
       options || (options = {});
 
       // Run validation.

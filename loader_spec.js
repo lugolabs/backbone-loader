@@ -1,15 +1,4 @@
-xdescribe("app.LoaderModel", function() {
-	var sync;
-
-	beforeEach(function () {
-		sync = Backbone.sync;
-		Backbone.sync = function() {};
-	});
-
-	afterEach(function () {
-		Backbone.sync = sync;
-	});
-
+describe("app.LoaderModel", function() {
 	describe("#fetch", function() {
 
 		it("triggers fetch:start", function() {
@@ -29,41 +18,33 @@ xdescribe("app.LoaderModel", function() {
 });
 
 describe("app.LoaderView", function() {
-	var sync;
+	describe("#initialize", function() {
+		var model, view;
 
-	beforeEach(function () {
-		sync = Backbone.sync;
-		Backbone.sync = function() {};
-	});
-
-	afterEach(function () {
-		Backbone.sync = sync;
-	});
-
-	describe("#loading", function() {
-		it("listens to model's fetch:start", function() {
-
-			var model = new app.LoaderModel,
-				view;
-
+		beforeEach(function() {
+			model = new app.LoaderModel;
 			spyOn(model, 'on');
-
 			view = new app.LoaderView({model: model});
+		});
 
+		afterEach(function() {
+			model = null;
+			view = null;
+		});
 
+		it("listens to model's fetch:start", function() {
 			expect(model.on).toHaveBeenCalledWith('fetch:start', view.loading, view);
+		});
 
+		it("listens to model's change with render", function() {
+			expect(model.on).toHaveBeenCalledWith('change', view.render, view);
+		});
+
+		it("listens to model's change with stopLoading", function() {
+			expect(model.on).toHaveBeenCalledWith('change', view.stopLoading, view);
 		});
 	});
 });
 
-// var jasmineExtensions = {
-// 	jQuerySpies = {},
-// 	spyOnEvent: function(element, eventName) {
-// 		var control {
-// 			triggered: false
-// 		};
-// 	}
-// }
 
 

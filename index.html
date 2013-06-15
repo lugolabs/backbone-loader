@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LUGO LABS | Backbone loader</title>
+
+  <style>
+  	body {
+  		font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+  		margin: .1em 5em;
+  	}
+
+  	article, section {
+  		display: block;
+  	}
+
+  	.logo {
+  		margin-top: 0;
+  	}
+
+  	.logo a, .logo a:link, .logo a:visited {
+  		color: #aaa;
+  		font-size: .4em;
+  		font-weight: normal;
+  		text-decoration: none;
+  		text-transform: uppercase;
+  		letter-spacing: 1em;
+  		transition: all .5s;
+  	}
+
+  	.logo a:hover {
+  		color: #000;
+  	}
+
+  </style>
+</head>
+
+<body>
+	<h1 class="logo"><a href="http://www.lugolabs.com">Lugo Labs</a></h1>
+	<article>
+		<h1>Backbone loader</h1>
+
+		<section class="body">
+			<div class="loader-progress" id="loader-progress"></div>
+			<div id="loader-content"></div>
+		</section>
+	</article>
+
+	<script type="text/javascript" src="vendor/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="vendor/underscore.js"></script>
+  <script type="text/javascript" src="vendor/backbone.js"></script>
+  <script type="text/javascript" src="loader.js"></script>
+
+  <script>
+ 		(function() {
+ 			var model = new app.LoaderModel,
+ 				view = new app.LoaderView({model: model});
+
+ 			model.fetch();
+ 		}).call(this);
+  </script>
+</body>
+</html>
