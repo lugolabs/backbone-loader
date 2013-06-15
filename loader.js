@@ -1,18 +1,27 @@
 var app = app || {};
 
+app.syncTimeout = 1000;
+
 app.LoaderModel = Backbone.Model.extend({
 	urlRoot: '/',
 
-	fetch: function() {
+	fetch: function(options) {
 		this.trigger('fetch:start');
-		this.constructor.__super__.fetch.apply(this, arguments);
+    options = options ? _.clone(options) : {};
+		var success = options.success;
+		var model = this;
+		options.success = function() {
+			model.trigger('fetch:stop');
+			if (success) success();
+		};
+		this.constructor.__super__.fetch.apply(this, [options]);
 	},
 
 	// emulate a server call with a delay
 	sync: function(method, model, options) {
 		setTimeout(function() {
 			options.success({name: 'test'});
-		}, 1000);
+		}, app.syncTimeout);
 	}
 
 });
@@ -20,8 +29,8 @@ app.LoaderModel = Backbone.Model.extend({
 app.LoaderView = Backbone.View.extend({
 	initialize: function() {
 		this.model.on('fetch:start', this.loading, this);
+		this.model.on('fetch:stop', this.stopLoading, this);
 		this.model.on('change', this.render, this);
-		this.model.on('change', this.stopLoading, this);
 	},
 
 	loading: function() {

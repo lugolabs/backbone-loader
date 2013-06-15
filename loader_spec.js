@@ -13,6 +13,32 @@ describe("app.LoaderModel", function() {
 
 			expect(triggered).toEqual(1);
 		});
+
+		it("triggers fetch:stop", function() {
+			var loader = 	new app.LoaderModel,
+				triggered = 0,
+				complete = false;
+
+			loader.on("fetch:stop", function() {
+				triggered = 1;
+			});
+
+			runs(function() {
+				loader.fetch();
+				setTimeout(function() {
+					complete = true;
+				}, app.syncTimeout + 10);
+			});
+
+			waitsFor(function() {
+				return complete;
+			}, 'Fetch', app.syncTimeout + 20);
+
+			runs(function() {
+				expect(triggered).toEqual(1);
+			});
+
+		});
 	});
 
 });
@@ -40,8 +66,8 @@ describe("app.LoaderView", function() {
 			expect(model.on).toHaveBeenCalledWith('change', view.render, view);
 		});
 
-		it("listens to model's change with stopLoading", function() {
-			expect(model.on).toHaveBeenCalledWith('change', view.stopLoading, view);
+		it("listens to model's fetch:stop with stopLoading", function() {
+			expect(model.on).toHaveBeenCalledWith('fetch:stop', view.stopLoading, view);
 		});
 	});
 });
