@@ -18,6 +18,6 @@ app.LoaderView = Backbone.View.extend({
 	},
 
 	loading: function() {
-		console.log(77);
+		this._loading = true;
 	}
 });

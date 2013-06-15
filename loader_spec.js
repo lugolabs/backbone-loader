@@ -29,17 +29,11 @@ xdescribe("app.LoaderModel", function() {
 });
 
 describe("app.LoaderView", function() {
-	var sync, model, view;
+	var sync;
 
 	beforeEach(function () {
 		sync = Backbone.sync;
 		Backbone.sync = function() {};
-
-		model = new app.LoaderModel;
-		view = new app.LoaderView({model: model});
-
-		spyOn(model, 'fetch');
-		spyOn(view, 'loading');
 	});
 
 	afterEach(function () {
@@ -48,14 +42,28 @@ describe("app.LoaderView", function() {
 
 	describe("#loading", function() {
 		it("listens to model's fetch:start", function() {
-			
 
-			model.fetch();
+			var model = new app.LoaderModel,
+				view;
 
-			// console.log(view.loading);
-			expect(view.loading).toHaveBeenCalled();
-			// expect(model.fetch).toHaveBeenCalled();
+			spyOn(model, 'on');
+
+			view = new app.LoaderView({model: model});
+
+
+			expect(model.on).toHaveBeenCalledWith('fetch:start', view.loading, view);
 
 		});
 	});
 });
+
+// var jasmineExtensions = {
+// 	jQuerySpies = {},
+// 	spyOnEvent: function(element, eventName) {
+// 		var control {
+// 			triggered: false
+// 		};
+// 	}
+// }
+
+
